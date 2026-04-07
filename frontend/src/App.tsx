@@ -402,9 +402,7 @@ function DashboardPage() {
                       </span>
                     </td>
                     <td>
-                      <button className="table-action" type="button">
-                        View
-                      </button>
+                      {renderInvoiceAction(invoice.status)}
                     </td>
                   </tr>
                 ))}
@@ -428,6 +426,30 @@ function DashboardPage() {
         </section>
       </main>
     </div>
+  )
+}
+
+function renderInvoiceAction(status: InvoiceStatus) {
+  if (status === 'Completed') {
+    return (
+      <button className="table-action" type="button">
+        View
+      </button>
+    )
+  }
+
+  if (status === 'Processing') {
+    return (
+      <button className="table-action table-action-disabled" type="button" disabled>
+        View
+      </button>
+    )
+  }
+
+  return (
+    <button className="table-action table-action-remove" type="button">
+      Remove
+    </button>
   )
 }
 
