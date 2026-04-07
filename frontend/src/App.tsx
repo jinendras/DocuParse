@@ -212,7 +212,7 @@ function AuthPage({ mode }: { mode: 'register' | 'login' }) {
       </div>
 
       <section className="auth-card">
-        <h1>{isRegister ? 'Register' : 'Sign In'}</h1>
+        <h1>{isRegister ? 'Register' : 'Login'}</h1>
 
         <form className="auth-form">
           {isRegister ? (
