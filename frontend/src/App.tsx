@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 type Feature = {
   title: string
@@ -10,6 +10,8 @@ type FooterGroup = {
   title: string
   links: string[]
 }
+
+type Route = 'home' | 'register' | 'login'
 
 const features: Feature[] = [
   {
@@ -31,8 +33,7 @@ const features: Feature[] = [
   },
   {
     title: 'Secure Authentication',
-    description:
-      'Enterprise-grade security with encrypted data storage',
+    description: 'Enterprise-grade security with encrypted data storage',
     icon: <ShieldIcon />,
   },
 ]
@@ -49,7 +50,38 @@ const footerGroups: FooterGroup[] = [
   { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Security'] },
 ]
 
+function getRouteFromHash(hash: string): Route {
+  if (hash === '#register') {
+    return 'register'
+  }
+
+  if (hash === '#login') {
+    return 'login'
+  }
+
+  return 'home'
+}
+
 function App() {
+  const [route, setRoute] = useState<Route>(() => getRouteFromHash(window.location.hash))
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setRoute(getRouteFromHash(window.location.hash))
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  if (route === 'register') {
+    return <AuthPage mode="register" />
+  }
+
+  if (route === 'login') {
+    return <AuthPage mode="login" />
+  }
+
   return (
     <div className="page-shell">
       <header className="topbar">
@@ -76,7 +108,7 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <a className="button button-primary" href="#features">
+              <a className="button button-primary" href="#register">
                 Get Started
               </a>
               <a className="button button-secondary" href="#login">
@@ -159,10 +191,60 @@ function App() {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2026 DocuParse. All rights reserved.</p>
+          <p>&copy; 2026 DocuParse. All rights reserved.</p>
         </div>
       </footer>
     </div>
+  )
+}
+
+function AuthPage({ mode }: { mode: 'register' | 'login' }) {
+  const isRegister = mode === 'register'
+
+  return (
+    <main className="auth-shell">
+      <div className="auth-header">
+        <a className="brand auth-brand" href="#home" aria-label="DocuParse home">
+          <DocumentIcon />
+          <span>DocuParse</span>
+        </a>
+        <p>{isRegister ? 'Create your account' : 'Sign in to your account'}</p>
+      </div>
+
+      <section className="auth-card">
+        <h1>{isRegister ? 'Register' : 'Sign In'}</h1>
+
+        <form className="auth-form">
+          {isRegister ? (
+            <label className="field">
+              <span>Full Name</span>
+              <input type="text" placeholder="John Doe" />
+            </label>
+          ) : null}
+
+          <label className="field">
+            <span>Email</span>
+            <input type="email" placeholder="you@example.com" />
+          </label>
+
+          <label className="field">
+            <span>Password</span>
+            <input type="password" placeholder="........" />
+          </label>
+
+          <button className="button button-primary auth-submit" type="submit">
+            {isRegister ? 'Create Account' : 'Sign In'}
+          </button>
+        </form>
+
+        <p className="auth-switch">
+          {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+          <a href={isRegister ? '#login' : '#register'}>
+            {isRegister ? 'Login here' : 'Sign up here'}
+          </a>
+        </p>
+      </section>
+    </main>
   )
 }
 
