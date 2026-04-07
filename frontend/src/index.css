@@ -1,0 +1,73 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #e5eef7;
+  background:
+    radial-gradient(circle at top, #1f4b7a 0%, #0f172a 45%),
+    linear-gradient(135deg, #111827, #1e293b);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+code {
+  font-family: "Cascadia Code", Consolas, monospace;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.hero-card {
+  width: min(100%, 680px);
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.4);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.82rem;
+  color: #7dd3fc;
+}
+
+.hero-card h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+}
+
+.lead {
+  margin: 16px 0 0;
+  font-size: 1.05rem;
+  color: #cbd5e1;
+}
+
+.lead code {
+  color: #f8fafc;
+}
